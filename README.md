@@ -28,11 +28,14 @@ Parte da **Garden Suite** — ferramentas de código aberto de nível Senior/Sta
   - Reconhecimento automático de dispositivos USB e Bluetooth MIDI (`navigator.requestMIDIAccess`).
   - Simulador virtual de pedal integrado para testes rápidos.
 
-### 📋 Gerenciador de Setlists & Portabilidade
+### 📋 Gerenciador de Setlists, Folhas Impressas & Portabilidade
 - 📑 **Organização de Shows**: Reordene músicas, ajuste BPM individual, notas de palco e patches de timbre.
+- 🖨️ **Folha de Palco Imprimível (Print Sheet)**: Gera documento de palco limpo em alto contraste com duração total do show, BPM, tom, timbres e notas para prancheta ou fixação no chão/amplificador.
+- ⏱️ **Cálculo de Duração & Auto-Scroll**: Estima tempo de performance a partir da métrica de compassos e BPM, e calibra automaticamente a velocidade de rolagem (px/s) ideal.
 - 💾 **100% Offline-First**: Armazenamento persistente no `localStorage` sem precisar de sinal de internet no local do evento.
 - 📤 **Importação / Exportação JSON**: Salve seus setlists em arquivo para backup ou compartilhamento com os integrantes da banda.
-- 📱 **PWA & APK Android Nativo**: Empacotado via Capacitor (`@capacitor/android`) para rodar em celulares e tablets Android.
+- 🌐 **Deploy no GitHub Pages**: Executável diretamente pelo navegador em qualquer dispositivo: [https://felipegardenghidev.github.io/garden-teleprompt/](https://felipegardenghidev.github.io/garden-teleprompt/)
+- 📱 **Compilação Contínua de APK Android**: A cada commit na branch `main`, o GitHub Actions compila o APK nativo (`garden-teleprompt-debug-apk`) disponível para download imediato na aba **Actions**.
 
 ---
 

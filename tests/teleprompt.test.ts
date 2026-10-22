@@ -7,6 +7,11 @@ import {
   transposeText,
 } from '../src/core/chord-transposer';
 import { StageMidiController } from '../src/core/midi-controller';
+import {
+  calculateEstimatedDuration,
+  calculateOptimalScrollSpeed,
+  generatePrintableSetlistHtml,
+} from '../src/core/stage-calculator';
 
 describe('Garden Teleprompt - Chords, Transposer & Stage MIDI Engine', () => {
   it('transposes single notes accurately', () => {
@@ -61,5 +66,54 @@ describe('Garden Teleprompt - Chords, Transposer & Stage MIDI Engine', () => {
     expect(receivedPayload.command).toBe(0xc0);
     expect(receivedPayload.data1).toBe(4);
     expect(receivedPayload.device).toContain('Virtual');
+  });
+
+  it('estimates song duration accurately based on content lines and BPM', () => {
+    const content = `
+      [Intro]
+      [C] [G] [Am] [F]
+      [Verse 1]
+      When I find myself in times of trouble
+      Mother Mary comes to me
+      [Chorus]
+      Let it be, let it be
+    `;
+    const estimate = calculateEstimatedDuration(content, 120);
+    expect(estimate.estimatedSeconds).toBeGreaterThan(30);
+    expect(estimate.formattedDuration).toMatch(/^\d{2}:\d{2}$/);
+  });
+
+  it('calculates optimal teleprompter scroll speed in px/s', () => {
+    // Viewport: 800px, Total content: 2400px (scroll distance 1600px), 160 seconds
+    const speed = calculateOptimalScrollSpeed(800, 2400, 160);
+    expect(speed).toBe(10);
+  });
+
+  it('generates high contrast printable setlist HTML', () => {
+    const mockSetlist = {
+      id: 'setlist-test',
+      name: 'Show de Sábado',
+      updatedAt: '2026-10-22',
+      songs: [
+        {
+          id: 's1',
+          title: 'Helena',
+          artist: 'My Chemical Romance',
+          originalKey: 'E',
+          transposeSemitones: 0,
+          bpm: 148,
+          scrollSpeed: 35,
+          content: 'Long ago...\nJust like the hearse...',
+          midiPatch: 12,
+          notes: 'Distorção + Chorus',
+        },
+      ],
+    };
+
+    const html = generatePrintableSetlistHtml(mockSetlist);
+    expect(html).toContain('Show de Sábado');
+    expect(html).toContain('Helena');
+    expect(html).toContain('148');
+    expect(html).toContain('PC #12');
   });
 });

@@ -10,7 +10,9 @@ import {
   Download,
   Upload,
   Music,
+  Printer,
 } from 'lucide-react';
+import { triggerPrintSetlist } from '../core/stage-calculator';
 
 interface SetlistDrawerProps {
   setlist: Setlist;
@@ -137,6 +139,14 @@ export const SetlistDrawer: React.FC<SetlistDrawerProps> = ({
         <div className="py-3 flex items-center justify-between text-xs">
           <span className="font-semibold text-zinc-300">{setlist.name}</span>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => triggerPrintSetlist(setlist)}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600/30 text-emerald-400 font-semibold transition"
+              title="Imprimir Folha de Palco (Print Setlist)"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Imprimir</span>
+            </button>
             <button
               onClick={handleExportJson}
               className="p-1.5 rounded-md bg-zinc-800 hover:bg-zinc-700 text-zinc-300"
